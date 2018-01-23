@@ -1,5 +1,15 @@
-Merge Files Webpack Plugin
+File Merge Webpack Plugin
 ==========================
+
+A fork of [merge-files-webpack-plugin](https://www.npmjs.com/package/merge-files-webpack-plugin)
+
+Differences:
+ * Supports use of `[hash], [contenthash]` in the filename
+ * Orders assets by chunk order before merge
+ * deleteSourceFiles accepts a RegExp, to allow a subset of files to be deleted
+ * Includes the file in the compilation stats (supports assets-webpack-plugin, should support others too)
+
+===
 
 This is a small plugin created to merge files extracted by 
 the **extract-text-webpack-plugin** into a single one.
@@ -17,7 +27,7 @@ into a single **.css** file.
 
 Install:
 
-    npm install merge-files-webpack-plugin --save-dev
+    npm install file-merge-webpack-plugin --save-dev
 
 You need to use **webpack 2+** and **extract-text-webpack-plugin 2+**.
 The filename for the **extract-text-webpack-plugin** has to use **[name].something.ext** 
@@ -68,5 +78,3 @@ The config object passed to MergeFilesPlugin admits:
 + **test**: Test applied to the different files created by webpack to see which should be merged. For the previous example, the files created by webpack with ExtractTextPlugin will be `entry1.js`, `entry1.style.css`, `entry2.js` and `entry2.style.css`. We are interested in `entry1.style.css` and `entry2.style.css` that are created by the ExtractTextPlugin plugin. As such, a good test will be `style.css` or `/\.css/` if you want to use RegExp. Optional. If it is not specified, filename is used.
 + **deleteSourceFiles**: If true, `entry1.style.css` and `entry2.style.css` will be deleted. If false, they will be created. If not specified, by default is setted to `true`.
 
-
-Check the test directory in https://github.com/jtefera/merge-files-webpack/tree/master/tests/test1

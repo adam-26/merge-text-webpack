@@ -1,0 +1,45 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:8.4
+    working_directory: ~/merge-text-webpack
+    steps:
+      - checkout
+      - run:
+          name: "~/.npmrc"
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: "Checking Versions"
+          command: |
+            node --version
+            npm --version
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: "npm install"
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - deploy:
+          name: Maybe Deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git config -l
+              git config user.email ci@circleci
+              git config user.name CircleCI
+
+              # Build for release
+              npm run build
+
+              # Tag the release, update package.json version and changelog, commit and push to github.
+              ./node_modules/.bin/standard-version --no-verify -m "chore(release): %s. [skip ci]"
+              git push --follow-tags origin master
+              npm publish
+            fi

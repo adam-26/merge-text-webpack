@@ -1,6 +1,6 @@
 {
-  "name": "merge-files-webpack-plugin",
-  "version": "1.1.1",
+  "name": "file-merge-webpack-plugin",
+  "version": "1.0.0",
   "description": "A webpack plugin to merge different files outputted from extract-text-webpack-plugin",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,17 @@
   "bugs": {
     "url": "https://github.com/jtefera/merge-files-webpack/issues"
   },
-  "homepage": "https://github.com/jtefera/merge-files-webpack#readme"
+  "homepage": "https://github.com/jtefera/merge-files-webpack#readme",
+  "dependencies": {
+    "html-webpack-plugin": "^2.30.1",
+    "loader-utils": "^1.1.0",
+    "webpack-sources": "^1.1.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.9",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "rimraf": "^2.6.2",
+    "standard-version": "^4.3.0",
+    "webpack": "^3.10.0"
+  }
 }
